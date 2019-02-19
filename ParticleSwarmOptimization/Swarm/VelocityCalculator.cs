@@ -5,7 +5,6 @@ namespace ParticleSwarmOptimization.Swarm
 {
     public static class VelocityCalculator
     {
-        private static readonly Random RandomNumberGenerator = new Random();
         private const double InertiaWeight = 0.7;
         private const double CognitiveCoefficient = 1.4;
         private const double SocialCoefficient = 1.4;
@@ -22,14 +21,14 @@ namespace ParticleSwarmOptimization.Swarm
         {
             return Particle.GlobalBestPosition
                 .Minus(particle.CurrentPosition)
-                .Multiply(SocialCoefficient * RandomNumberGenerator.NextDouble());
+                .Multiply(SocialCoefficient * Config.RandomNumberGenerator.NextDouble());
         }
 
         private static Coords GetCognitiveComponent(Particle particle)
         {
              return particle.PersonalBestPosition
                 .Minus(particle.CurrentPosition)
-                .Multiply(CognitiveCoefficient * RandomNumberGenerator.NextDouble());
+                .Multiply(CognitiveCoefficient * Config.RandomNumberGenerator.NextDouble());
         }
 
         private static Coords GetInertia(Particle particle)

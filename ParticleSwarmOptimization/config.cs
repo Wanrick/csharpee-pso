@@ -16,7 +16,7 @@ namespace ParticleSwarmOptimization
         public Config(int dimensions)
         {
             Dimensions = dimensions;
-            fitnessFunction = new Sphere();
+            fitnessFunction = new AbsVal();
         }
 
         public IFitnessFunction GetFitnessFunction()

@@ -4,11 +4,38 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
 {
     public class Coords
     {
-        public double[] CoordinateArray { get; set; }
+        public double[] CoordinateArray { get; }
+        private readonly double lowerBound;
+        private readonly double upperBound;
 
-        public Coords(int dimensions)
+        public Coords(int dimensions, double minimum, double maximum, bool zeroArray)
         {
+            lowerBound = minimum;
+            upperBound = maximum;
             CoordinateArray = new double[dimensions];
+
+            InitCoordinateArray(zeroArray);
+        }
+
+        private void InitCoordinateArray(bool zeroArray)
+        {
+            if (zeroArray)
+            {
+                for (var i = 0; i < CoordinateArray.Length; i++)
+                {
+                    CoordinateArray[i] = 0.0;
+                }
+
+                return;
+            }
+
+            var range = upperBound - lowerBound;
+
+            for (var i = 0; i < CoordinateArray.Length; i++)
+            {
+                var pos = (Config.RandomNumberGenerator.NextDouble() * range) + lowerBound;
+                CoordinateArray[i] = pos;
+            }
         }
 
         public Coords(Coords coords)
@@ -35,14 +62,14 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
             {
                 return null;
             }
-            
+
             var output = new double[coords.CoordinateArray.Length];
 
             for (var i = 0; i < CoordinateArray.Length; i++)
             {
                 output[i] = CoordinateArray[i] + coords.CoordinateArray[i];
             }
-            
+
             return new Coords(output);
         }
 
@@ -59,7 +86,7 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
             {
                 output[i] = CoordinateArray[i] - coords.CoordinateArray[i];
             }
-            
+
             return new Coords(output);
         }
 
@@ -76,50 +103,45 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
             {
                 output[i] = CoordinateArray[i] * coords.CoordinateArray[i];
             }
-            
+
             return new Coords(output);
         }
-        
+
         public Coords Multiply(double cooefficient)
         {
             var output = new double[CoordinateArray.Length];
 
             for (var i = 0; i < CoordinateArray.Length; i++)
             {
-                output[i] = CoordinateArray[i] + cooefficient;
+                output[i] = CoordinateArray[i] * cooefficient;
             }
-            
+
             return new Coords(output);
         }
 
-        public void InitBestPosition(double initialValues)
+        public void InitPosition(Tuple<double, double> bounds)
         {
-            for (var i = 0; i < CoordinateArray.Length; i++)
-            {
-                CoordinateArray[i] = initialValues;
-            }
         }
 
-        public void InitVelocity()
+        public Coords Move(Coords velocity)
         {
-            for (var i = 0; i < CoordinateArray.Length; i++)
+            if (velocity.CoordinateArray.Length != CoordinateArray.Length)
             {
-                CoordinateArray[i] = 0.0;
+                return null;
             }
-        }
 
-        public void InitPosition(double bounds)
-        {
+            var output = new double[velocity.CoordinateArray.Length];
+
             for (var i = 0; i < CoordinateArray.Length; i++)
             {
-                var pos = Config.RandomNumberGenerator.NextDouble() * bounds;
-                if (Config.RandomNumberGenerator.Next(0, 2) == 1)
+                var newPosition = CoordinateArray[i] + velocity.CoordinateArray[i];
+                if (newPosition >= lowerBound && newPosition <= upperBound)
                 {
-                    pos *= -1;
+                    output[i] = newPosition;
                 }
-
-                CoordinateArray[i] = pos;
             }
+
+            return new Coords(output);
         }
     }
 }

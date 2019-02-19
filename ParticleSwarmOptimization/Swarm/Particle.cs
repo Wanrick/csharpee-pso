@@ -7,35 +7,34 @@ namespace ParticleSwarmOptimization.Swarm
     public class Particle
     {
         private readonly IFitnessFunction fitnessFunction;
-        
-        private static readonly Random RandomPositionGenerator = new Random();
         public static Coords GlobalBestPosition { get; private set; }
-        
-        public static double GlobalBestFitness { get; set; }
-        
+        public static double GlobalBestFitness { get; set; } = double.MaxValue;
+
         public Coords PersonalBestPosition;
+        private double personalBestFitness;
+
         public Coords CurrentVelocity;
         public Coords CurrentPosition;
 
-        private double personalBestFitness;
 
         public Particle(Config config)
         {
-            PersonalBestPosition = new Coords(config.Dimensions);
-            CurrentVelocity = new Coords(config.Dimensions);
-            CurrentPosition = new Coords(config.Dimensions);
-            GlobalBestPosition = new Coords(config.Dimensions);
             fitnessFunction = config.GetFitnessFunction();
-            
-            GlobalBestPosition.InitPosition(fitnessFunction.GetBounds());
-            PersonalBestPosition.InitBestPosition(Config.InitialValues);
-            CurrentVelocity.InitVelocity();
-            CurrentPosition.InitPosition(fitnessFunction.GetBounds());
+            InitCoords(config.Dimensions, fitnessFunction.GetBounds());
+        }
+
+        private void InitCoords(int dimensions, Tuple<double,double> bounds)
+        {
+            var (minimum, maximum) = bounds;
+            GlobalBestPosition = new Coords(dimensions, minimum, maximum, false);
+            PersonalBestPosition = new Coords(dimensions, minimum, maximum, false);
+            CurrentVelocity = new Coords(dimensions, minimum, maximum, true);
+            CurrentPosition = new Coords(dimensions, minimum, maximum, false);
         }
 
         public void Update()
         {
-            CurrentPosition = CurrentPosition.Add(VelocityCalculator.GetNextVelocity(this));
+            CurrentPosition = CurrentPosition.Move(VelocityCalculator.GetNextVelocity(this));
             var fitness = fitnessFunction.EvaluateFitness(this);
 
             if (IsPersonalBest(fitness))

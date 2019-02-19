@@ -1,3 +1,4 @@
+using System;
 using ParticleSwarmOptimization.Swarm;
 
 namespace ParticleSwarmOptimization.FitnessFunctions.Interface
@@ -5,6 +6,6 @@ namespace ParticleSwarmOptimization.FitnessFunctions.Interface
     public interface IFitnessFunction
     {
         double EvaluateFitness(Particle particle);
-        double GetBounds();
+        Tuple<double, double> GetBounds();
     }
 }

@@ -11,7 +11,7 @@ namespace ParticleSwarmOptimization
         {
             var config = new Config(20);
             var swarm = new Particle[20];
-            var countMaxIter = 1000;
+            var countMaxIter = 10000;
             
             for (var i = 0; i < swarm.Length; i++)
             {
@@ -19,7 +19,7 @@ namespace ParticleSwarmOptimization
             }
 
             Particle.GlobalBestFitness = double.MaxValue;
-            while (!StopConditionMet() && countMaxIter > 0)
+            while (!StopConditionMet(countMaxIter))
             {
                 foreach (var particle in swarm)
                 {
@@ -27,13 +27,13 @@ namespace ParticleSwarmOptimization
                 }
 
                 countMaxIter--;
-                Console.WriteLine(Particle.GlobalBestFitness);
+                Console.WriteLine(Math.Round(Particle.GlobalBestFitness, 2));
             }
         }
 
-        private static bool StopConditionMet()
+        private static bool StopConditionMet(int countMaxIter)
         {
-            return Particle.GlobalBestFitness < 0.001;
+            return (Particle.GlobalBestFitness < 0.001 || countMaxIter < 0);
         }
     }
 }
