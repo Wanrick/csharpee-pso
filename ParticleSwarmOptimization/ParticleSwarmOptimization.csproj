@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="config.cs" />
     <Compile Include="FitnessFunctions\FitnessFunctions.cs" />
     <Compile Include="FitnessFunctions\Interface\IFitnessFunction.cs" />
     <Compile Include="Program.cs" />

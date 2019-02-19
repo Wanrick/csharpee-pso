@@ -5,7 +5,6 @@ namespace ParticleSwarmOptimization.Swarm
 {
     public static class VelocityCalculator
     {
-        public static Coords SearchSpace;
         private static readonly Random RandomNumberGenerator = new Random();
         private const double InertiaWeight = 0.7;
         private const double CognitiveCoefficient = 1.4;

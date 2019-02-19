@@ -1,7 +1,10 @@
+using ParticleSwarmOptimization.Swarm;
+
 namespace ParticleSwarmOptimization.FitnessFunctions.Interface
 {
     public interface IFitnessFunction
     {
-        double EvaluateFitness(double x, double y);
+        double EvaluateFitness(Particle particle);
+        double GetBounds();
     }
 }

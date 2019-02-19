@@ -9,24 +9,24 @@ namespace ParticleSwarmOptimization
     {
         public static void Main(string[] args)
         {
-            
-            var searchSpace = new Coords(10,10);
-            var swarm = new Particle[100];
-            
-            VelocityCalculator.SearchSpace = searchSpace;
+            var config = new Config(20);
+            var swarm = new Particle[20];
+            var countMaxIter = 1000;
             
             for (var i = 0; i < swarm.Length; i++)
             {
-                swarm[i] = new Particle(new Booth());
+                swarm[i] = new Particle(config);
             }
 
             Particle.GlobalBestFitness = double.MaxValue;
-            while (!StopConditionMet())
+            while (!StopConditionMet() && countMaxIter > 0)
             {
                 foreach (var particle in swarm)
                 {
                     particle.Update();
                 }
+
+                countMaxIter--;
                 Console.WriteLine(Particle.GlobalBestFitness);
             }
         }
