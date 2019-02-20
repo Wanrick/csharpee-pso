@@ -11,14 +11,16 @@ namespace ParticleSwarmOptimization.Swarm
         public static double GlobalBestFitness { get; set; } = double.MaxValue;
 
         public Coords PersonalBestPosition;
-        private double personalBestFitness;
+        private double PersonalBestFitness { get; set; } = double.MaxValue;
 
         public Coords CurrentVelocity;
         public Coords CurrentPosition;
+        private readonly VelocityCalculator velocityCalculator;
 
 
         public Particle(Config config)
         {
+            velocityCalculator = config.GetVelocityCalculator();
             fitnessFunction = config.GetFitnessFunction();
             InitCoords(config.Dimensions, fitnessFunction.GetBounds());
         }
@@ -34,13 +36,15 @@ namespace ParticleSwarmOptimization.Swarm
 
         public void Update()
         {
-            CurrentPosition = CurrentPosition.Move(VelocityCalculator.GetNextVelocity(this));
+            var newVelocity = velocityCalculator.GetNextVelocity(this);
+            CurrentPosition = CurrentPosition.Move(newVelocity);
+            CurrentVelocity = newVelocity;
             var fitness = fitnessFunction.EvaluateFitness(this);
 
             if (IsPersonalBest(fitness))
             {
                 PersonalBestPosition = new Coords(CurrentPosition);
-                personalBestFitness = fitness;
+                PersonalBestFitness = fitness;
             }
 
             if (IsGlobalBest(fitness))
@@ -57,7 +61,7 @@ namespace ParticleSwarmOptimization.Swarm
 
         private bool IsPersonalBest(double fitness)
         {
-            return fitness < personalBestFitness;
+            return fitness < PersonalBestFitness;
         }
     }
 }

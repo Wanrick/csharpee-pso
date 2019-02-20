@@ -3,13 +3,20 @@ using ParticleSwarmOptimization.Swarm.Utilities;
 
 namespace ParticleSwarmOptimization.Swarm
 {
-    public static class VelocityCalculator
+    public class VelocityCalculator
     {
-        private const double InertiaWeight = 0.7;
-        private const double CognitiveCoefficient = 1.4;
-        private const double SocialCoefficient = 1.4;
+        private readonly double inertiaWeight;
+        private readonly double cognitiveCoefficient;
+        private readonly double socialCoefficient;
+
+        public VelocityCalculator(double inertia = 0.7, double cognitive = 1.4, double social = 1.4)
+        {
+            inertiaWeight = inertia;
+            cognitiveCoefficient = cognitive;
+            socialCoefficient = social;
+        }
         
-        public static Coords GetNextVelocity(Particle particle)
+        public Coords GetNextVelocity(Particle particle)
         {
             var inertia = GetInertia(particle);
             var cognitive = GetCognitiveComponent(particle);
@@ -17,25 +24,23 @@ namespace ParticleSwarmOptimization.Swarm
             return inertia.Add(cognitive).Add(social);
         }
 
-        private static Coords GetSocialComponent(Particle particle)
+        private Coords GetSocialComponent(Particle particle)
         {
             return Particle.GlobalBestPosition
                 .Minus(particle.CurrentPosition)
-                .Multiply(SocialCoefficient * Config.RandomNumberGenerator.NextDouble());
+                .Multiply(socialCoefficient * Config.RandomNumberGenerator.NextDouble());
         }
 
-        private static Coords GetCognitiveComponent(Particle particle)
+        private Coords GetCognitiveComponent(Particle particle)
         {
              return particle.PersonalBestPosition
                 .Minus(particle.CurrentPosition)
-                .Multiply(CognitiveCoefficient * Config.RandomNumberGenerator.NextDouble());
+                .Multiply(cognitiveCoefficient * Config.RandomNumberGenerator.NextDouble());
         }
 
-        private static Coords GetInertia(Particle particle)
+        private Coords GetInertia(Particle particle)
         {
-            return particle.CurrentVelocity.Multiply(InertiaWeight);
+            return particle.CurrentVelocity.Multiply(inertiaWeight);
         }
-        
-        
     }
 }

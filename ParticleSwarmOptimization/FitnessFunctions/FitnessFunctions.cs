@@ -119,7 +119,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
     {
         public double EvaluateFitness(Particle particle)
         {
-            var result = 0.0;
+            var result = 1.0;
             var arr = particle.CurrentPosition.CoordinateArray;
             var n = arr.Length;
 
@@ -154,7 +154,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
     {
         public double EvaluateFitness(Particle particle)
         {
-            var result = 0.0;
+            var result = 1.0;
             var arr = particle.CurrentPosition.CoordinateArray;
             var n = arr.Length;
 
@@ -170,7 +170,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         {
             var result = 0.0;
             
-            for (int i = 0; i < 5; i++)
+            for (int i = 1; i < 5; i++)
             {
                 result += i * Math.Cos(x * (i + 1) + i);
             }

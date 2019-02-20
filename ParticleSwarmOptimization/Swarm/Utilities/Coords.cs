@@ -34,6 +34,10 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
             for (var i = 0; i < CoordinateArray.Length; i++)
             {
                 var pos = (Config.RandomNumberGenerator.NextDouble() * range) + lowerBound;
+                while (Math.Abs(pos) < 0.000000000000001)
+                {
+                    pos = (Config.RandomNumberGenerator.NextDouble() * range) + lowerBound;
+                }
                 CoordinateArray[i] = pos;
             }
         }
@@ -45,15 +49,21 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
             {
                 CoordinateArray[i] = coords.CoordinateArray[i];
             }
+
+            lowerBound = coords.lowerBound;
+            upperBound = coords.upperBound;
         }
 
-        public Coords(double[] coordsArr)
+        public Coords(double[] coordsArr, double minimum, double maximum)
         {
             CoordinateArray = new double[coordsArr.Length];
             for (var i = 0; i < CoordinateArray.Length; i++)
             {
                 CoordinateArray[i] = coordsArr[i];
             }
+
+            upperBound = maximum;
+            lowerBound = minimum;
         }
 
         public Coords Add(Coords coords)
@@ -70,7 +80,7 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
                 output[i] = CoordinateArray[i] + coords.CoordinateArray[i];
             }
 
-            return new Coords(output);
+            return new Coords(output, coords.lowerBound, coords.upperBound);
         }
 
         public Coords Minus(Coords coords)
@@ -87,7 +97,7 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
                 output[i] = CoordinateArray[i] - coords.CoordinateArray[i];
             }
 
-            return new Coords(output);
+            return new Coords(output, coords.lowerBound, coords.upperBound);
         }
 
         public Coords Multiply(Coords coords)
@@ -104,7 +114,7 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
                 output[i] = CoordinateArray[i] * coords.CoordinateArray[i];
             }
 
-            return new Coords(output);
+            return new Coords(output, coords.lowerBound, coords.upperBound);
         }
 
         public Coords Multiply(double cooefficient)
@@ -116,11 +126,7 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
                 output[i] = CoordinateArray[i] * cooefficient;
             }
 
-            return new Coords(output);
-        }
-
-        public void InitPosition(Tuple<double, double> bounds)
-        {
+            return new Coords(output, lowerBound, upperBound);
         }
 
         public Coords Move(Coords velocity)
@@ -139,9 +145,13 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
                 {
                     output[i] = newPosition;
                 }
+                else
+                {
+                    output[i] = CoordinateArray[i];
+                }
             }
 
-            return new Coords(output);
+            return new Coords(output, velocity.lowerBound, velocity.upperBound);
         }
     }
 }
