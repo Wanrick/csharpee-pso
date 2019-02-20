@@ -1,5 +1,6 @@
 using System;
 using ParticleSwarmOptimization.FitnessFunctions.Interface;
+using ParticleSwarmOptimization.Swarm.Interfaces;
 using ParticleSwarmOptimization.Swarm.Utilities;
 
 namespace ParticleSwarmOptimization.Swarm
@@ -15,7 +16,7 @@ namespace ParticleSwarmOptimization.Swarm
 
         public Coords CurrentVelocity;
         public Coords CurrentPosition;
-        private readonly VelocityCalculator velocityCalculator;
+        private readonly IVelocityCalculator velocityCalculator;
 
 
         public Particle(Config config)

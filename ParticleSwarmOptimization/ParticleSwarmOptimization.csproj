@@ -47,9 +47,11 @@
     <Compile Include="FitnessFunctions\Interface\IFitnessFunction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Swarm\Interfaces\IVelocityCalculator.cs" />
     <Compile Include="Swarm\Particle.cs" />
+    <Compile Include="Swarm\SPSO2011VelocityCalculator.cs" />
     <Compile Include="Swarm\Utilities\Coords.cs" />
-    <Compile Include="Swarm\VelocityCalculator.cs" />
+    <Compile Include="Swarm\InertiaVelocityCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSES-MersenneTwister.txt" />

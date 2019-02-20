@@ -1,15 +1,16 @@
 using System;
+using ParticleSwarmOptimization.Swarm.Interfaces;
 using ParticleSwarmOptimization.Swarm.Utilities;
 
 namespace ParticleSwarmOptimization.Swarm
 {
-    public class VelocityCalculator
+    public class InertiaVelocityCalculator : IVelocityCalculator
     {
         private readonly double inertiaWeight;
         private readonly double cognitiveCoefficient;
         private readonly double socialCoefficient;
 
-        public VelocityCalculator(double inertia = 0.7, double cognitive = 1.4, double social = 1.4)
+        public InertiaVelocityCalculator(double inertia = 0.7, double cognitive = 1.4, double social = 1.4)
         {
             inertiaWeight = inertia;
             cognitiveCoefficient = cognitive;
