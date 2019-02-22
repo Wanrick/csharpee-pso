@@ -12,24 +12,10 @@ namespace ParticleSwarmOptimization
     {
         public static void Main(string[] args)
         {
-            string psoPath = Path.GetFullPath( @"/home/wanrick/PSOResults/PSOattempt.csv");
-            /*if (!File.Exists(psoPath))
-            {
-                File.Create(psoPath);
-            }*/
-            var psoResults = new StreamWriter(psoPath, true);
-            
-            string spsoPath = Path.GetFullPath(@"/home/wanrick/PSOResults/SPSOattempt.csv");
-            /*if (!File.Exists(spsoPath))
-            {
-                File.Create(spsoPath);
-            }*/
-            var spsoResults = new StreamWriter(spsoPath, true);
-            
             const int dimensions = 20;
             const int swarmSize = 20;
             const int iterations = 1000;
-            const int runs = 1;
+            const int runs = 30;
             var functionName = string.Empty;
 
             var (inertiaParam, cognitiveParam, socialParam) = GetVelocityParams();
@@ -53,9 +39,13 @@ namespace ParticleSwarmOptimization
                 Cognitive = cognitiveParam,
                 Social = socialParam
             };
-            for (var j = 0; j < 5; j++)
+
+            for (int l = 0; l < 5; l++)
             {
-                switch (j)
+
+
+
+                switch (l)
                 {
                     case 0:
                         spsoconfig.SetAckley();
@@ -89,29 +79,31 @@ namespace ParticleSwarmOptimization
                         break;
                 }
 
-                Console.WriteLine();
-                Console.WriteLine(functionName);
-                Console.WriteLine("-------------------------------------");
-                Console.WriteLine();
+                string psoPath = Path.GetFullPath(@"/home/wanrick/PSOResults/PSOattempt-" + functionName + ".csv");
+                var psoResults = new StreamWriter(psoPath, true);
+
+                string spsoPath = Path.GetFullPath(@"/home/wanrick/PSOResults/SPSOattempt-" + functionName + ".csv");
+                var spsoResults = new StreamWriter(spsoPath, true);
 
                 for (var i = 0; i < runs; i++)
                 {
-                    RunPso(psoconfig, psoResults);
-                    RunSpso(spsoconfig, spsoResults);
+                    RunPso(psoconfig, psoResults, i + 1);
+                    RunSpso(spsoconfig, spsoResults, i + 1);
                 }
+
+
+                psoResults.Close();
+                spsoResults.Close();
             }
-            psoResults.Close();
-            spsoResults.Close();
         }
 
-        private static Tuple<double, double, double> GetVelocityParams()
-        {
-            return new Tuple<double, double, double>(0.7, 1.4, 1.4);
-        }
-
-        private static void RunSpso(Config config, StreamWriter spsoResults)
+        private static void RunSpso(Config config, StreamWriter spsoResults, int run)
         {
             var spsoResult = new StringBuilder();
+            spsoResult.Append("Run: " + run);
+            spsoResult.AppendLine();
+            spsoResult.AppendLine();
+            spsoResult.AppendLine();
             config.MakeSpso2011VelocityCalculator();
             var swarm = new Particle[config.SwarmSize];
             var countMaxIter = config.Iterations;
@@ -129,24 +121,27 @@ namespace ParticleSwarmOptimization
             {
                 foreach (var particle in swarm)
                 {
-                    particle.Update(spsoResult);
+                    particle.Update();
                 }
 
                 countMaxIter--;
                 Console.WriteLine(Particle.GlobalBestFitness);
                 
                 spsoResult.AppendLine();
-                spsoResult.Append(Particle.GlobalBestFitness + "|" + string.Join("|", Particle.GlobalBestPosition.CoordinateArray));
-                spsoResult.AppendLine();
+                spsoResult.Append(Particle.GlobalBestFitness + "||" + string.Join("|", Particle.GlobalBestPosition.CoordinateArray));
                 spsoResult.AppendLine();
             }
             spsoResults.Write(spsoResult);
             Console.WriteLine();
         }
 
-        private static void RunPso(Config config, StreamWriter psoResults)
+        private static void RunPso(Config config, StreamWriter psoResults, int run)
         {
             var psoResult = new StringBuilder();
+            psoResult.Append("Run: " + run);
+            psoResult.AppendLine();
+            psoResult.AppendLine();
+            psoResult.AppendLine();
             config.MakeInertiaVelocityCalculator();
             var swarm = new Particle[config.SwarmSize];
             var countMaxIter = config.Iterations;
@@ -164,14 +159,13 @@ namespace ParticleSwarmOptimization
             {
                 foreach (var particle in swarm)
                 {
-                    particle.Update(psoResult);
+                    particle.Update();
                 }
 
                 countMaxIter--;
 
                 psoResult.AppendLine();
-                psoResult.Append(Particle.GlobalBestFitness + "|" + string.Join("|", Particle.GlobalBestPosition.CoordinateArray));
-                psoResult.AppendLine();
+                psoResult.Append(Particle.GlobalBestFitness + "||" + string.Join("|", Particle.GlobalBestPosition.CoordinateArray));
                 psoResult.AppendLine();
                 
                 Console.WriteLine(Particle.GlobalBestFitness);
@@ -185,6 +179,11 @@ namespace ParticleSwarmOptimization
         private static bool StopConditionMet(int countMaxIter)
         {
             return (Particle.GlobalBestFitness < 0.001 || countMaxIter < 0);
+        }
+
+        private static Tuple<double, double, double> GetVelocityParams()
+        {
+            return new Tuple<double, double, double>(0.7, 1.4, 1.4);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace ParticleSwarmOptimization.Swarm
             CurrentPosition = new Coords(dimensions, minimum, maximum, false);
         }
 
-        public void Update(StringBuilder spsoResult)
+        public void Update()
         {
             var newVelocity = velocityCalculator.GetNextVelocity(this);
             CurrentPosition = CurrentPosition.Move(newVelocity);
@@ -56,9 +56,6 @@ namespace ParticleSwarmOptimization.Swarm
                 GlobalBestPosition = new Coords(CurrentPosition);
                 GlobalBestFitness = fitness;
             }
-
-            spsoResult.Append(PersonalBestFitness + "|" + string.Join("|", PersonalBestPosition.CoordinateArray));
-            spsoResult.AppendLine();
         }
 
         private bool IsGlobalBest(double fitness)
