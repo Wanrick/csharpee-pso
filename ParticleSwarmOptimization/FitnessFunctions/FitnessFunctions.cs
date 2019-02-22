@@ -100,7 +100,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
             var n = arr.Length;
             var m = 10.0;
 
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
                 result += Math.Sin(arr[i]) * Math.Pow(Math.Sin(i * Math.Pow(arr[i], 2) / Math.PI), 2 * m);
             }
@@ -123,7 +123,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
             var arr = particle.CurrentPosition.CoordinateArray;
             var n = arr.Length;
 
-            for (int i = 0; i < n-1; i++)
+            for (var i = 0; i < n-1; i++)
             {
                 result *= (1 + (i + 1) * KatsuuraSum(arr[i]));
             }
@@ -136,7 +136,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
             var d = 32;
             var result = 0.0;
             
-            for (int k = 1; k < d; k++)
+            for (var k = 1; k < d; k++)
             {
                 result += Math.Floor((Math.Pow(2, k) * x)) * Math.Pow(2, -k);
             }
@@ -158,7 +158,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
             var arr = particle.CurrentPosition.CoordinateArray;
             var n = arr.Length;
 
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
                 result *= SchubertSum(arr[i]);
             }
@@ -170,7 +170,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         {
             var result = 0.0;
             
-            for (int i = 1; i < 5; i++)
+            for (var i = 1; i < 5; i++)
             {
                 result += i * Math.Cos(x * (i + 1) + i);
             }

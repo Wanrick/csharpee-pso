@@ -1,16 +1,18 @@
 using System;
-using MersenneTwister;
 using ParticleSwarmOptimization.FitnessFunctions;
 using ParticleSwarmOptimization.FitnessFunctions.Interface;
 using ParticleSwarmOptimization.Swarm;
 using ParticleSwarmOptimization.Swarm.Interfaces;
+using MathNet.Numerics.Random;
+using MathNet.Numerics.Distributions;
 
 namespace ParticleSwarmOptimization
 {
     public class Config
     {
-        public static readonly Random RandomNumberGenerator = MersenneTwister.DsfmtRandom.Create();
-        private readonly IFitnessFunction fitnessFunction;
+        public static readonly Random RandomNumberGenerator = new MersenneTwister(true);
+        public static readonly Normal NormalRandom = new Normal(0.0,1.0, RandomNumberGenerator);
+        private IFitnessFunction fitnessFunction;
         private IVelocityCalculator velocityCalculator;
 
         public int Iterations { get; set; }
@@ -20,20 +22,9 @@ namespace ParticleSwarmOptimization
         public double Cognitive { get; set; }
         public double Social { get; set; }
 
-        public Config(int swarm, int iter, int dimensions, double inertiaParameter, double cognitiveParameter, double socialParameter)
-        {
-            SwarmSize = swarm;
-            Iterations = iter;
-            Dimensions = dimensions;
-            Inertia = inertiaParameter;
-            Cognitive = cognitiveParameter;
-            Social = socialParameter;
-            fitnessFunction = new AbsVal();
-        }
-
         public Config()
         {
-            fitnessFunction = new AbsVal();
+            
         }
 
         public IFitnessFunction GetFitnessFunction()
@@ -51,9 +42,39 @@ namespace ParticleSwarmOptimization
             velocityCalculator = new InertiaVelocityCalculator(Inertia, Cognitive, Social);
         }
 
-        public void MakeSPSO2011VelocityCalculator()
+        public void MakeSpso2011VelocityCalculator()
         {
             velocityCalculator = new Spso2011VelocityCalculator(Inertia, Cognitive, Social);
+        }
+        
+        public void SetAbs()
+        {
+            fitnessFunction = new AbsVal();
+        }
+        
+        public void SetAckley()
+        {
+            fitnessFunction = new Ackley();
+        }
+        
+        public void SetSphere()
+        {
+            fitnessFunction = new Sphere();
+        }
+        
+        public void SetMichalewicz()
+        {
+            fitnessFunction = new Michalewicz();
+        }
+        
+        public void SetKatsuura()
+        {
+            fitnessFunction = new Katsuura();
+        }
+        
+        public void SetSchubert()
+        {
+            fitnessFunction = new Schubert();
         }
     }
 }
