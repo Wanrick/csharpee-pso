@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleSwarmOptimization", "ParticleSwarmOptimization\ParticleSwarmOptimization.csproj", "{2F19DB5B-B0CE-4681-ADF0-817A945CBBC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSOTester", "PSOTester\PSOTester.csproj", "{2942AF80-E4EA-49CC-8424-FE820C791543}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{2F19DB5B-B0CE-4681-ADF0-817A945CBBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F19DB5B-B0CE-4681-ADF0-817A945CBBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F19DB5B-B0CE-4681-ADF0-817A945CBBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2942AF80-E4EA-49CC-8424-FE820C791543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2942AF80-E4EA-49CC-8424-FE820C791543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2942AF80-E4EA-49CC-8424-FE820C791543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2942AF80-E4EA-49CC-8424-FE820C791543}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
