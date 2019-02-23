@@ -73,6 +73,12 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
             }
         }
 
+        public double[] GetCoordinateArrayCopy()
+        {
+            var result = CopyArray(CoordinateArray);
+            return result;
+        }
+
         public Coords Add(Coords coords)
         {
             if (coords.CoordinateArray.Length != CoordinateArray.Length)
@@ -177,7 +183,10 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
 
             for (var i = 0; i < CoordinateArray.Length; i++)
             {
-                output[i] = CoordinateArray[i] / coords.CoordinateArray[i];
+                if (coords.CoordinateArray[i] > 0)
+                {
+                    output[i] = CoordinateArray[i] / coords.CoordinateArray[i];
+                }
             }
 
             CoordinateArray = output;
@@ -190,7 +199,10 @@ namespace ParticleSwarmOptimization.Swarm.Utilities
 
             for (var i = 0; i < CoordinateArray.Length; i++)
             {
-                output[i] = CoordinateArray[i] / scalar;
+                if (scalar > 0)
+                {
+                    output[i] = CoordinateArray[i] / scalar;
+                }
             }
 
             CoordinateArray = output;

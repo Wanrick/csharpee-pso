@@ -1,10 +1,11 @@
 using System;
+using MathNet.Numerics.Distributions;
+using MathNet.Numerics.Random;
+using ParticleSwarmOptimization.Calculators;
 using ParticleSwarmOptimization.FitnessFunctions;
 using ParticleSwarmOptimization.FitnessFunctions.Interface;
-using ParticleSwarmOptimization.Swarm;
+using ParticleSwarmOptimization.Swarm.Calculators;
 using ParticleSwarmOptimization.Swarm.Interfaces;
-using MathNet.Numerics.Random;
-using MathNet.Numerics.Distributions;
 
 namespace ParticleSwarmOptimization
 {

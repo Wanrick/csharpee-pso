@@ -23,6 +23,27 @@ namespace PSOTester
         }
         
         [Test]
+        public void TestInitWithArray()
+        {
+            var coords = new double[]{5,5,5};
+            var coords2 = new Coords(coords, 0, 10);
+            Assert.True(coords2.LowerBound == 0);
+            Assert.True(coords2.UpperBound == 10);
+            Assert.True(coords2.CoordinateArray.Length == 3);
+            Assert.True(coords2.CoordinateArray.All(value => value == 5));
+        }
+        
+        [Test]
+        public void TestInitRandomCoords()
+        {
+            var coords = new Coords(5, 0, 10, false);
+            
+            Assert.True(coords.LowerBound == 0);
+            Assert.True(coords.UpperBound == 10);
+            Assert.True(coords.CoordinateArray.All(value => value != 0));
+        }
+        
+        [Test]
         public void TestAddScalar()
         {
             var coords = new Coords(5, 0, 10, true);

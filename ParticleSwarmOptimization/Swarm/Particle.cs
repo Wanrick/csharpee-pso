@@ -8,7 +8,9 @@ namespace ParticleSwarmOptimization.Swarm
 {
     public class Particle
     {
+        private readonly IVelocityCalculator velocityCalculator;
         private readonly IFitnessFunction fitnessFunction;
+        
         public static Coords GlobalBestPosition { get; set; }
         public static double GlobalBestFitness { get; set; } = double.MaxValue;
 
@@ -17,7 +19,7 @@ namespace ParticleSwarmOptimization.Swarm
 
         public Coords CurrentVelocity;
         public Coords CurrentPosition;
-        private readonly IVelocityCalculator velocityCalculator;
+        
         public int Dimensions { get; }
 
 

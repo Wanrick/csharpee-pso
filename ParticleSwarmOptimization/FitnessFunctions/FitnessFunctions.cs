@@ -8,7 +8,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
     {
         public double EvaluateFitness(Particle particle)
         {
-            var position = particle.CurrentPosition.CoordinateArray;
+            var position = particle.CurrentPosition.GetCoordinateArrayCopy();
             var sum = 0.0;
             for (var i = 0; i < position.Length; i++)
             {
@@ -28,7 +28,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
     {
         public double EvaluateFitness(Particle particle)
         {
-            var position = particle.CurrentPosition.CoordinateArray;
+            var position = particle.CurrentPosition.GetCoordinateArrayCopy();
             var sum = 0.0;
             for (var i = 0; i < position.Length; i++)
             {
@@ -49,7 +49,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 0.0;
-            var array = particle.CurrentPosition.CoordinateArray;
+            var array = particle.CurrentPosition.GetCoordinateArrayCopy();
 
             result = -20 * GetFirstExponent(array) - GetSecondExponent(array) + 20 + Math.Exp(1);
             return result;
@@ -96,7 +96,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 0.0;
-            var arr = particle.CurrentPosition.CoordinateArray;
+            var arr = particle.CurrentPosition.GetCoordinateArrayCopy();
             var n = arr.Length;
             var m = 10.0;
 
@@ -120,7 +120,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 1.0;
-            var arr = particle.CurrentPosition.CoordinateArray;
+            var arr = particle.CurrentPosition.GetCoordinateArrayCopy();
             var n = arr.Length;
 
             for (var i = 0; i < n-1; i++)
@@ -155,7 +155,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 1.0;
-            var arr = particle.CurrentPosition.CoordinateArray;
+            var arr = particle.CurrentPosition.GetCoordinateArrayCopy();
             var n = arr.Length;
 
             for (var i = 0; i < n; i++)
@@ -189,7 +189,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 0.0;
-            var arr = particle.CurrentPosition.CoordinateArray;
+            var arr = particle.CurrentPosition.GetCoordinateArrayCopy();
             var n = arr.Length;
             
             return result;
@@ -206,7 +206,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 0.0;
-            var arr = particle.CurrentPosition.CoordinateArray;
+            var arr = particle.CurrentPosition.GetCoordinateArrayCopy();
             var n = arr.Length;
             
             return result;
@@ -223,7 +223,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 0.0;
-            var arr = particle.CurrentPosition.CoordinateArray;
+            var arr = particle.CurrentPosition.GetCoordinateArrayCopy();
             var n = arr.Length;
             
             return result;
@@ -240,7 +240,7 @@ namespace ParticleSwarmOptimization.FitnessFunctions
         public double EvaluateFitness(Particle particle)
         {
             var result = 0.0;
-            var arr = particle.CurrentPosition.CoordinateArray;
+            var arr = particle.CurrentPosition.GetCoordinateArrayCopy();
             var n = arr.Length;
             
             return result;

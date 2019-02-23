@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculators\InertiaVelocityCalculator.cs" />
+    <Compile Include="Calculators\Interfaces\IVelocityCalculator.cs" />
+    <Compile Include="Calculators\SPSO2011VelocityCalculator.cs" />
     <Compile Include="config.cs" />
     <Compile Include="FitnessFunctions\FitnessFunctions.cs" />
     <Compile Include="FitnessFunctions\Interface\IFitnessFunction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Swarm\Interfaces\IVelocityCalculator.cs" />
     <Compile Include="Swarm\Particle.cs" />
     <Compile Include="Swarm\SPSO2011VelocityCalculator.cs" />
     <Compile Include="Swarm\Utilities\Coords.cs" />
